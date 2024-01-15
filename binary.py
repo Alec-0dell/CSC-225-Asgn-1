@@ -6,13 +6,25 @@
 def add(addend_a, addend_b):
     """
     Add two 8-bit, two's complement binary numbers; ignore carries/overflows.
-    TODO: Implement this function. Do *not* convert the numbers to decimal.
 
     :param addend_a: A bitstring representing the first number
     :param addend_b: A bitstring representing the second number
     :return: A bitstring representing the sum
     """
-    pass
+    #ensure both inputs are strings of equal lengths only containing 1's and 0's
+    aList = [*addend_a]
+    bList = [*addend_b]
+    carryover = 0
+    output = ''
+    for i in range(len(addend_a)):
+        sum = ((int)(aList.pop()) + (int)(bList.pop())) + carryover
+        if sum < 2:
+            carryover = 0
+            output = str(sum) + output
+        else:
+            carryover = 1
+            output = str(sum - 2) + output
+    return output
 
 
 def negate(number):
@@ -23,8 +35,18 @@ def negate(number):
     :param number: A bitstring representing the number to negate
     :return: A bistring representing the negated number
     """
-    pass
+    num = flip(number)
+    return add(num, "00000001")
 
+def flip(number):
+    numList = [*number]
+    output=''
+    for num in numList:
+        if ((int)(num) == 1):
+            output = output + '0'
+        else:
+            output = output + '1' 
+    return output
 
 def subtract(minuend, subtrahend):
     """
@@ -35,9 +57,36 @@ def subtract(minuend, subtrahend):
     :param subtrahend: A bitstring representing the number to subtract
     :return: A bitstring representing the difference
     """
-    pass
-
-
+    #Cheating way:
+    #return (add(minuend, negate(subtrahend)))
+    minList = [*minuend]
+    subList = [*subtrahend]
+    output = ''
+    i = len(minList)-1
+    while i >= 0:
+        if minList[i] > subList[i]:
+            output = '1' + output
+        elif minList[i] < subList[i]:
+            minList[:i] = carry_one(minList[:i])
+            output = '1' + output 
+        else: 
+            output =  '0' + output
+        i = i - 1
+    return output
+                
+                
+def carry_one(minList):
+    i = len(minList) - 1
+    while i >= 0:
+        if minList[i] == '0':
+            minList[i] = '1'
+        elif minList[i] == '1':
+            minList[i] = '0'
+            return minList
+        i = i - 1
+    return minList
+    
+            
 def binary_to_decimal(number):
     """
     Convert an 8-bit, two's complement binary number to decimal.
@@ -46,7 +95,22 @@ def binary_to_decimal(number):
     :param number: A bitstring representing the number to convert
     :return: An integer, the converted number
     """
-    pass
+    output = 0
+    isNeg = number[0] == '1'
+    if isNeg:
+        number = negate(number)
+    numList = [*number]
+    i = len(numList) - 1
+    for num in numList:
+        output = ((int)(num) * (2**i)) + output
+        i = i - 1
+    if isNeg:
+        return -output
+    else:
+        return output
+
+        
+
 
 
 def decimal_to_binary(number):
@@ -58,4 +122,24 @@ def decimal_to_binary(number):
     :return: A bitstring representing the converted number
     :raise OverflowError: If the number cannot be represented with 8 bits
     """
-    pass
+    if number > 127 or number < -128:
+        raise OverflowError
+    else:
+        if number < 0:
+            return negate(decimal_to_binary_pos(-number))
+        else:
+            return decimal_to_binary_pos(number)
+        
+def decimal_to_binary_pos(number):
+    output = ""
+    cur_number = number
+    i = 7
+    while i >= 0:
+        if cur_number >= (2 ** i):
+            output = output + '1'
+            cur_number = cur_number - (2 ** i)
+        else:
+            output = output + '0'
+        i = i - 1
+    return output
+            
