@@ -38,10 +38,26 @@ def bit_to_char(bits):
             return 'E'
         case 15:
             return 'F'
-        case _:
-            return (str)(output)
-            
-
+        case 0: 
+            return "0"
+        case 1: 
+            return "1"
+        case 2: 
+            return "2"
+        case 3: 
+            return "3"
+        case 4: 
+            return "4"
+        case 5: 
+            return "5"
+        case 6: 
+            return "6"
+        case 7: 
+            return "7"
+        case 8: 
+            return "8"
+        case 9: 
+            return "9"
 
 def hex_to_binary(number):
     """
@@ -72,8 +88,29 @@ def char_to_bin(char):
             char = 14  
         case 'F':
             char = 15  
-        case _: 
-            char = ord(char) - 48
+        case '0': 
+            char = 0
+        case '1': 
+            char = 1
+        case '2': 
+            char = 2
+        case '3': 
+            char = 3
+        case '4': 
+            char = 4
+        case '5': 
+            char = 5
+        case '6': 
+            char = 6
+        case '7': 
+            char = 7
+        case '8': 
+            char = 8
+        case '9': 
+            char = 9
+            
+        
+            
     i = 3
     output = ''
     while i >= 0:

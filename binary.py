@@ -20,12 +20,18 @@ def add(addend_a, addend_b):
         num1 = 1 if aList.pop() == "1" else 0 
         num2 = 1 if bList.pop() == "1" else 0           
         sum = (num1) + (num2) + carryover
-        if sum < 2:
+        if sum == 0:
             carryover = 0
-            output = str(sum) + output
+            output = '0' + output
+        elif sum == 1:
+            carryover = 0
+            output = '1' + output
+        elif sum == 2:
+            carryover = 1
+            output = '0' + output
         else:
             carryover = 1
-            output = str(sum - 2) + output
+            output = '1' + output
     return output
 
 
