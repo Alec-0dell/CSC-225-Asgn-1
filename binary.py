@@ -17,7 +17,9 @@ def add(addend_a, addend_b):
     carryover = 0
     output = ''
     for i in range(len(addend_a)):
-        sum = ((int)(aList.pop()) + (int)(bList.pop())) + carryover
+        num1 = 1 if aList.pop() == "1" else 0 
+        num2 = 1 if bList.pop() == "1" else 0           
+        sum = (num1) + (num2) + carryover
         if sum < 2:
             carryover = 0
             output = str(sum) + output
@@ -42,7 +44,7 @@ def flip(number):
     numList = [*number]
     output=''
     for num in numList:
-        if ((int)(num) == 1):
+        if (num == "1"):
             output = output + '0'
         else:
             output = output + '1' 
@@ -102,7 +104,8 @@ def binary_to_decimal(number):
     numList = [*number]
     i = len(numList) - 1
     for num in numList:
-        output = ((int)(num) * (2**i)) + output
+        num1 = 1 if num == '1' else 0
+        output = ((num1) * (2**i)) + output
         i = i - 1
     if isNeg:
         return -output

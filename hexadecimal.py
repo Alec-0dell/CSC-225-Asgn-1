@@ -22,7 +22,8 @@ def bit_to_char(bits):
     numList = [*bits]
     i = len(numList) - 1
     for num in numList:
-        output = ((int)(num) * (2**i)) + output
+        num1 = 1 if num == '1' else 0
+        output = ((num1) * (2**i)) + output
         i = i - 1
     match output:
         case 10:
@@ -72,7 +73,7 @@ def char_to_bin(char):
         case 'F':
             char = 15  
         case _: 
-            char = (int)(char)
+            char = ord(char) - 48
     i = 3
     output = ''
     while i >= 0:
@@ -84,4 +85,3 @@ def char_to_bin(char):
         i = i - 1
     return output
         
-
